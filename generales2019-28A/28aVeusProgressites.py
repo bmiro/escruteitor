@@ -38,6 +38,10 @@ HTML = """
     <p>Llindar d'escó: {threshold}</p>
     <p>{target_party}: {party_votes}</p>
 
+    <pre>
+{hondt_detail}
+    </pre>
+
     <p><b>{message}</b></p>
 
     <p><a href="https://github.com/bmiro/escruteitor/blob/master/generales2019-28A/28aVeusProgressites.py">Codi font</a></p>
@@ -99,20 +103,20 @@ if __name__=="__main__":
             matrix_line.append(calculus)
         matrix.append(matrix_line)
 
-    hondt = sorted(hondt, key=lambda x: x[1], reverse=True)[:8]
+    hondt_final = sorted(hondt, key=lambda x: x[1], reverse=True)[:SEATS]
 
     # Seats calculus
     for party_code in results.keys():
         i = 0
         for row in matrix:
             if row[0] == party_code:
-                seats = len([x for x in filter(lambda x: x[0] == party_code, hondt)])
+                seats = len([x for x in filter(lambda x: x[0] == party_code, hondt_final)])
                 matrix[i][seats_column] = seats
                 break
             i += 1
 
     # Mark seats
-    for hondt_seat in hondt:
+    for hondt_seat in hondt_final:
         party_code = hondt_seat[0]
         seat = hondt_seat[2]
         i = 0
@@ -123,13 +127,26 @@ if __name__=="__main__":
                 matrix[i][j] = ">> {} <<".format(value)
             i += 1
 
+    # Sort matrix
+    matrix = sorted(matrix, key=lambda x: x[1], reverse=True)
+
     # Finding threshold
-    seat_threshold = hondt[-1][1]
+    seat_threshold = hondt_final[-1][1]
+
+    # Hondt detail
+    i = 0
+    hondt_detail = []
+    for seat in sorted(hondt, key=lambda x: x[1], reverse=True)[:SEATS+6]:
+        party_code = seat[0]
+        party_name = get_party_name(names_data, party_code)
+        party_votes = seat[1]
+        hondt_detail.append((party_name, party_votes,'X' if i < SEATS else '-'))
+        i += 1
+
 
     # Set party names
     for row in matrix:
         row[0] = get_party_name(names_data, row[0])
-
 
     if target_votes > seat_threshold:
         msg = "Fumata negra! Habemus diputat! (de moment)"
@@ -144,6 +161,7 @@ if __name__=="__main__":
                 table=tabulate(matrix, headers=headers),
                 threshold=seat_threshold,
                 target_party=target_name,
+                hondt_detail=tabulate(hondt_detail),
                 party_votes=target_votes,
                 message=msg,
             )
@@ -153,6 +171,7 @@ if __name__=="__main__":
         print("Actualitzat: {}".format(datetime.now().strftime("%H:%M")))
         print("Escrutat: {}\n".format(results_data["totales"]["act"]["pmesesc"]))
         print(tabulate(matrix, headers=headers))
+        print(tabulate(hondt_detail))
         print("\nLlindar d'escó: {} vots".format(seat_threshold))
         print("{}: {} vots".format(target_name, target_votes))
         print("\n\n\n\nCodi font: https://github.com/bmiro/escruteitor/tree/master/generales2019-28A")

@@ -15,7 +15,7 @@ NAMES_URL = "https://resultados.eleccionesgenerales19.es/assets/nomenclator.json
 RESULTS_JOURNAL_DIR = "results-28a2019"
 
 RESULTS_KEY = "act" # act -> current reults, ant -> for 2016 results
-SEATS_THRESHOLD = -1 # Show only parties with more than SEATS_THRESHOLD
+SEATS_THRESHOLD = 0 # Show only parties with more than SEATS_THRESHOLD
 
 def get_party_name(names_data, party_code):
     """

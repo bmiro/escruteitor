@@ -18,6 +18,31 @@ TARGET_PARTY = "0006" # Veus PROGRESSISTES
 
 SEATS = 8
 
+HTML = """
+<html>
+  <head>
+    <title>Eleccions Generals 2019 28A - Habemus diputat?</title>
+    <meta http-equiv=”refresh” content=”60" />
+     <meta charset="utf-8">
+  </head>
+
+  <body>
+    <h1>Eleccions Generals 2019 28A - Habemus diputat?</h1>
+    <p>Actualitzat: {updated}</p>
+    <p>Escrutat: {escrutat}</p>
+
+    <pre>
+{table}
+    </pre>
+
+    <p>Llindar d'escó: {threshold}</p>
+    <p>{target_party}: {party_votes}</p>
+
+    <b>{message}</b>
+  </body>
+</html>
+"""
+
 
 def get_party_name(names_data, party_code):
     """
@@ -30,7 +55,6 @@ def get_party_name(names_data, party_code):
 
 
 if __name__=="__main__":
-    print("Eleccions Generals 2019 28A - Habemus diputat?\n")
 
     results_raw = urllib.request.urlopen(RESULTS_URL).read().decode('utf-8')
     names_raw = urllib.request.urlopen(NAMES_URL).read().decode('utf-8')
@@ -104,24 +128,36 @@ if __name__=="__main__":
     for row in matrix:
         row[0] = get_party_name(names_data, row[0])
 
-    print("Actualitzat: {}".format(datetime.now().strftime("%H:%M")))
-    print("Escrutat: {}\n".format(results_data["totales"]["act"]["pmesesc"]))
-    print(tabulate(matrix, headers=headers))
-    print("\nLlindar d'escó: {} vots".format(seat_threshold))
-    print("{}: {} vots".format(target_name, target_votes))
-
 
     if target_votes > seat_threshold:
         msg = "Fumata negra! Habemus diputat! (de moment)"
-        print("\n" + msg)
-        if "--sound" in argv:
-            for i in range(3):
-                os.system("echo '{}' | espeak".format(msg))
     else:
         msg = "Diputat en proces... :("
-        print("\n" + msg)
-        if "--sound" in argv:
+
+    if "--html" in argv:
+        print(
+            HTML.format(
+                updated=datetime.now().strftime("%H:%M"),
+                escrutat=results_data["totales"]["act"]["pmesesc"],
+                table=tabulate(matrix, headers=headers),
+                threshold=seat_threshold,
+                target_party=target_name,
+                party_votes=target_votes,
+                message=msg,
+            )
+        )
+    else:
+        print("Eleccions Generals 2019 28A - Habemus diputat?\n")
+        print("Actualitzat: {}".format(datetime.now().strftime("%H:%M")))
+        print("Escrutat: {}\n".format(results_data["totales"]["act"]["pmesesc"]))
+        print(tabulate(matrix, headers=headers))
+        print("\nLlindar d'escó: {} vots".format(seat_threshold))
+        print("{}: {} vots".format(target_name, target_votes))
+        print("\n\n\n\nCodi font: https://github.com/bmiro/escruteitor/tree/master/generales2019-28A")
+
+    if "--sound" in argv:
+        if target_votes > seat_threshold:
+            for i in range(3):
+                os.system("echo '{}' | espeak".format(msg))
+        else:
             os.system("echo '{}' | espeak".format(msg))
-
-    print("\n\n\n\nCodi font: https://github.com/bmiro/escruteitor/tree/master/generales2019-28A")
-

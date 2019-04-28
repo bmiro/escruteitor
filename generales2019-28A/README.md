@@ -23,6 +23,10 @@ If you want a sound notification turn on your speakers and (check source code fi
 
     watch -d -n 60 ./28aVeusProgressites.py --sound
 
+To tenerate HTML
+
+    ./28aVeusProgressites.py --html
+
 
 
 

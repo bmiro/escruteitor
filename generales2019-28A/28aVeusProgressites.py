@@ -38,7 +38,9 @@ HTML = """
     <p>Llindar d'escó: {threshold}</p>
     <p>{target_party}: {party_votes}</p>
 
-    <b>{message}</b>
+    <p><b>{message}</b></p>
+
+    <p><a href="https://github.com/bmiro/escruteitor/blob/master/generales2019-28A/28aVeusProgressites.py">Codi font</a></p>
   </body>
 </html>
 """

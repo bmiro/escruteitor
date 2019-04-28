@@ -51,9 +51,12 @@ if __name__=="__main__":
         if not os.path.isdir(RESULTS_JOURNAL_DIR):
             os.mkdir(RESULTS_JOURNAL_DIR)
 
-        for filename in (results_data_file, names_file):
-            with open(filename, 'w') as f:
-                f.write(results_raw)
+        with open(results_data_file, 'w') as f:
+            f.write(results_raw)
+
+        with open(names_file, 'w') as f:
+            f.write(names_raw)
+
 
     # Print seat results
     results_data = json.loads(results_raw)

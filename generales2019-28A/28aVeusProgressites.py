@@ -136,11 +136,13 @@ if __name__=="__main__":
     # Hondt detail
     i = 0
     hondt_detail = []
-    for seat in sorted(hondt, key=lambda x: x[1], reverse=True)[:SEATS+6]:
+    for seat in sorted(hondt, key=lambda x: x[1], reverse=True)[:SEATS+4]:
         party_code = seat[0]
         party_name = get_party_name(names_data, party_code)
         party_votes = seat[1]
         hondt_detail.append((party_name, party_votes,'X' if i < SEATS else '-'))
+        if i == SEATS - 1:
+            hondt_detail.append(("^^^^^", "^^^^", "^"))
         i += 1
 
 

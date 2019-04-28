@@ -132,7 +132,7 @@ if __name__=="__main__":
     if target_votes > seat_threshold:
         msg = "Fumata negra! Habemus diputat! (de moment)"
     else:
-        msg = "Diputat en proces... :("
+        msg = "Diputat en procés... :("
 
     if "--html" in argv:
         print(

@@ -1,9 +1,11 @@
 # Usage
 
 Prepare:
+
     pip3 install tabulate
 
 Execute:
+
     ./28a.py
 
 If you want to persist the downloaded results issue:

@@ -22,7 +22,7 @@ HTML = """
 <html>
   <head>
     <title>Eleccions Generals 2019 28A - Habemus diputat?</title>
-    <meta http-equiv=”refresh” content="60" />
+    <meta http-equiv="refresh" content="60" />
      <meta charset="utf-8">
   </head>
 

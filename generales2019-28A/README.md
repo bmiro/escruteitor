@@ -1,8 +1,9 @@
-# Usage
+# Usage for 28a.py
 
 Prepare:
 
     pip3 install tabulate
+    apt install espeak # For sound alarm
 
 Execute:
 
@@ -11,6 +12,17 @@ Execute:
 If you want to persist the downloaded results issue:
 
     ./28a.py --persist
+
+# Usage for 28aVeusProgressites.py
+
+    watch -d -n 60 ./28aVeusProgressites.py
+
+If you want a sound notification turn on your speakers and (check source code first ;) ):
+
+    watch -d -n 60 ./28aVeusProgressites.py --sound
+
+
+
 
 
 # Links

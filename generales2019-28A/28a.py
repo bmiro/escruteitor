@@ -64,15 +64,15 @@ if __name__=="__main__":
     for party_result in results_data["partotabla"]:
         party_code = party_result[RESULTS_KEY]["codpar"]
         party_seats = int(party_result[RESULTS_KEY]["carg"])
-        if party_seats > SEATS_THRESHOLD:
-            results[party_code] = party_seats
+        results[party_code] = party_seats
 
     table = []
     for r in sorted(results.items(), key=lambda kv: int(kv[1]), reverse=True):
         party_code = r[0]
         party_seats = r[1]
         party_name = get_party_name(names_data, party_code)
-        table.append((party_seats, party_name))
+        if party_seats > SEATS_THRESHOLD:
+            table.append((party_seats, party_name))
 
     print("Actualizado: {}".format(datetime.now().strftime("%H:%M")))
     print("Escrutado: {}".format(results_data["totales"]["act"]["pmesesc"]))

@@ -15,6 +15,8 @@ If you want to persist the downloaded results issue:
 
 # Usage for 28aVeusProgressites.py
 
+Execute it every 60s to check the results.
+
     watch -d -n 60 ./28aVeusProgressites.py
 
 If you want a sound notification turn on your speakers and (check source code first ;) ):

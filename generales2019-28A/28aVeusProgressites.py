@@ -123,3 +123,5 @@ if __name__=="__main__":
         if "--sound" in argv:
             os.system("echo '{}' | espeak".format(msg))
 
+    print("\n\n\n\nCodi font: https://github.com/bmiro/escruteitor/tree/master/generales2019-28A")
+
